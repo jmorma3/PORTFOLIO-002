@@ -1,53 +1,58 @@
 <!-- Estructura HTML de mi componente/página -->
 <template>
   <div class="main-page">
-    <select v-model="searchParams.barrio_id">
-      <option disabled value="">Barrio</option>
-      <option v-for="barrio in barrios" :value="barrio.id" :key="barrio.id">
-        {{ barrio.name }}
-      </option>
-    </select>
-    <select v-model="searchParams.bedrooms">
-      <option disabled value="">Número de habitaciones</option>
-      <option v-for="n in 5" :value="n" :key="n">{{ n }} Habitaciones</option>
-    </select>
+    <!-- Componente "Navbar" -->
+    <navbar></navbar>
+    
+    <div>
+      <select v-model="searchParams.barrio_id">
+        <option disabled value="">Barrio</option>
+        <option v-for="barrio in barrios" :value="barrio.id" :key="barrio.id">
+          {{ barrio.name }}
+        </option>
+      </select>
+      <select v-model="searchParams.bedrooms">
+        <option disabled value="">Número de habitaciones</option>
+        <option v-for="n in 5" :value="n" :key="n">{{ n }} Habitaciones</option>
+      </select>
 
-    <select v-model="searchParams.guests">
-      <option disabled value="">Número de huéspedes</option>
-      <option v-for="n in 5" :value="n" :key="n">{{ n }} Huéspedes</option>
-    </select>
-    <input
-      v-model.number="searchParams.min_price"
-      type="number"
-      placeholder="Precio mínimo"
-    />
-    <input
-      v-model.number="searchParams.max_price"
-      type="number"
-      placeholder="Precio máximo"
-    />
-    <button @click="performSearch">Buscar</button>
+      <select v-model="searchParams.guests">
+        <option disabled value="">Número de huéspedes</option>
+        <option v-for="n in 5" :value="n" :key="n">{{ n }} Huéspedes</option>
+      </select>
+      <input
+        v-model.number="searchParams.min_price"
+        type="number"
+        placeholder="Precio mínimo"
+      />
+      <input
+        v-model.number="searchParams.max_price"
+        type="number"
+        placeholder="Precio máximo"
+      />
+      <button @click="performSearch">Buscar</button>
 
-    <!-- Resultados y mensaje -->
-    <div v-if="searchResults.length">
-      <div
-        v-for="apartment in searchResults"
-        :key="apartment.id"
-        class="apartment-info"
-      >
-        <h3>{{ apartment.apartment_title }}</h3>
-        <p>Dirección: {{ apartment.address }}</p>
-        <p>Barrio: {{ apartment.barrio.name }}</p>
-        <p>Máximo de huéspedes: {{ apartment.accommodates_max }}</p>
-        <p>Baños: {{ apartment.bathrooms }}</p>
-        <p>Habitaciones: {{ apartment.bedrooms }}</p>
-        <p>Precio mensual: {{ apartment.monthly_price }}</p>
-        <p>Metraje cuadrado: {{ apartment.square_meter }}</p>
-        <div v-for="(pic, index) in apartment.pic" :key="index">
-          <img
-            :src="pic"
-            :alt="`Imagen ${index + 1} de ${apartment.apartment_title}`"
-          />
+      <!-- Resultados y mensaje -->
+      <div v-if="searchResults.length">
+        <div
+          v-for="apartment in searchResults"
+          :key="apartment.id"
+          class="apartment-info"
+        >
+          <h3>{{ apartment.apartment_title }}</h3>
+          <p>Dirección: {{ apartment.address }}</p>
+          <p>Barrio: {{ apartment.barrio.name }}</p>
+          <p>Máximo de huéspedes: {{ apartment.accommodates_max }}</p>
+          <p>Baños: {{ apartment.bathrooms }}</p>
+          <p>Habitaciones: {{ apartment.bedrooms }}</p>
+          <p>Precio mensual: {{ apartment.monthly_price }}</p>
+          <p>Metraje cuadrado: {{ apartment.square_meter }}</p>
+          <div v-for="(pic, index) in apartment.pic" :key="index">
+            <img
+              :src="pic"
+              :alt="`Imagen ${index + 1} de ${apartment.apartment_title}`"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -60,11 +65,19 @@
 <script>
 // Importación de los servicios getBarrios y searchApartments desde mis servicios
 import { getBarrios, searchApartments } from "../services/apartments.js";
+import Navbar from "../components/Navbar.vue";
+import FilterModal from "../components/FilterModal.vue";
+import SearchButton from "../components/SearchButton.vue";
 
 // Definición y exportación del componente Vue
 export default {
   // Nombre del componente
   name: "MainPage",
+  components: {
+    Navbar,
+    FilterModal,
+    SearchButton
+  },
 
   // La función data devuelve un objeto que representa el estado local del componente
   data() {
