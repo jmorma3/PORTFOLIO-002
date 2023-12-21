@@ -1,9 +1,12 @@
 <template>
   <div class="main-page">
+
+    <!-- Navbar componente -->
     <div>
       <Navbar />
     </div>
-    <!-- Asegúrate de que la altura de la Navbar sea considerada aquí -->
+
+    <!-- Searchbar componente -->
     <div
       style="
         margin-top: 100px;
@@ -30,7 +33,8 @@
         transform: translate(-50%, -50%);
       "
     >
-    <div v-if="message" class="search-message">{{ message }}</div>
+    
+    <ApartmentCard v-for="apartment in apartments" :key="apartment.id" :apartment="apartment" />
     </div>
   </div>
 </template>
@@ -38,6 +42,7 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import Searchbar from "../components/Searchbar.vue";
+import ApartmentCard from "../components/ApartmentCard.vue"
 import { searchApartments } from "../services/apartments.js";
 
 export default {
@@ -45,9 +50,12 @@ export default {
   components: {
     Navbar,
     Searchbar,
+    ApartmentCard
+    
   },
   data() {
     return {
+      apartments: [], // Deberías llenar esto con los resultados de la búsqueda
       searchResults: [],
       isLoading: false,
       hasError: false,
@@ -70,6 +78,7 @@ export default {
       try {
         const results = await searchApartments(searchParams);
         this.searchResults = results;
+        this.apartments = results;
       } catch (error) {
         console.error("Error en la búsqueda: ", error);
         this.hasError = true;

@@ -1,44 +1,48 @@
 <template>
   <div
-    style="width: 500px"
-    class="flex flex-row items-center justify-between bg-white p-3 rounded-lg shadow space-x-10"
+    style="
+      width: 500px;
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    "
   >
     <!-- Botón desplegable de Barrios -->
-    <div class="w-1/3">
+    <div style="width: 33%">
       <button
+        ref="barrioButton"
         @click="toggleDropdown"
-        class="bg-gray-100 text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
+        style="
+          background-color: #f3f3f3;
+          color: black;
+          padding: 5px 10px;
+          border-radius: 8px;
+          border: none;
+        "
       >
         {{ selectedBarrio ? selectedBarrio.name : "Selecciona un barrio" }}
-        <svg
-          class="ml-2 w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          ></path>
-        </svg>
       </button>
 
       <!-- Opciones de Barrios -->
       <div
         v-show="isDropdownOpen"
-        class="absolute mt-1 w-full bg-white rounded-md shadow-lg z-20"
-        @click="toggleDropdown"
+        style="
+          position: absolute;
+          width: 100%;
+          background-color: white;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        "
       >
-        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
-          <!-- con el compando @click.stop evito que el evento se propague hacia arriba y deje abierto el depslegable: -->
+        <ul style="list-style: none; padding: 5px">
           <li
             v-for="barrio in barrios"
             :key="barrio.id"
-            class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             @click.stop="selectBarrio(barrio)"
+            style="padding: 5px; cursor: pointer"
           >
             {{ barrio.name }}
           </li>
@@ -47,31 +51,41 @@
     </div>
 
     <!-- Botón para abrir el modal de Filtros Adicionales -->
-    <div class="w-1/3 text-center">
-        
-        <button
-          @click="openModal"
-          class="bg-gray-100 text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
-        >
-          Más filtros
-        </button>
+    <div style="width: 33%; text-align: center">
+      <button
+        @click="openModal"
+        style="
+          background-color: #f3f3f3;
+          color: black;
+          padding: 5px 10px;
+          border-radius: 8px;
+          border: none;
+        "
+      >
+        Más filtros
+      </button>
     </div>
 
     <!-- Botón de Búsqueda -->
-    <div class="w-1/3 text-right">
-
-        <button
-          @click="performSearch"
-          class="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg text-sm px-4 py-2.5"
-        >
-          Buscar
-        </button>
+    <div style="width: 33%; text-align: right">
+      <button
+        @click="performSearch"
+        style="
+          background-color: #007bff;
+          color: white;
+          padding: 5px 10px;
+          border-radius: 8px;
+          border: none;
+        "
+      >
+        Buscar
+      </button>
     </div>
   </div>
 
   <!-- Modal de Filtros Adicionales -->
   <div
-    v-if="isModalOpen"
+  v-if="isModalOpen"
     class="fixed inset-0 bg-black bg-opacity-50 z-40"
     @click="closeModal"
   >
@@ -178,6 +192,15 @@ export default {
       },
     };
   },
+  mounted() {
+    // Registrar el controlador de eventos
+    document.addEventListener('click', this.handleClickOutside);
+  },
+  beforeDestroy() {
+    // Limpiar el controlador de eventos
+    document.removeEventListener('click', this.handleClickOutside);
+  },
+
   async created() {
     try {
       this.barrios = await getBarrios();
@@ -192,6 +215,7 @@ export default {
     },
     openModal() {
       this.isModalOpen = true;
+
     },
     closeModal() {
       this.isModalOpen = false;
@@ -200,6 +224,16 @@ export default {
       this.selectedBarrio = barrio;
       this.searchParams.barrio_id = barrio.id;
       this.toggleDropdown();
+    },
+    handleClickOutside(event) {
+      // Obtener elemento barrioButton
+      const barrioButton = this.$refs.barrioButton;
+      
+
+      // Verificar si el clic fue fuera de los elementos y si están abiertos
+      if (this.isDropdownOpen && barrioButton && !barrioButton.contains(event.target)) {
+        this.toggleDropdown();
+      }
     },
     performSearch() {
       if (this.searchParams.min_price > this.searchParams.max_price) {
