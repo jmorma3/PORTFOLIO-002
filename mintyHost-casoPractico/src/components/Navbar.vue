@@ -46,6 +46,7 @@
 <script>
 //Importo mi imagen Logo (me dio problemas el enlace y decidí recortarla de Google)
 import logoUrl from "../assets/MintyHost_logotipo.png";
+
 export default {
   name: "Navbar",
   data() {

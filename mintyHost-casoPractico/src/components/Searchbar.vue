@@ -1,24 +1,28 @@
 <template>
-  <div
+  <div class="searchbar-container"
     style="
-      width: 500px;
+      width: 300px;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
       background-color: white;
-      padding: 10px;
+      padding: 5px;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1;
     "
   >
     <!-- Botón desplegable de Barrios -->
-    <div style="width: 33%">
+    <div style="width: 100%; margin-bottom: 10px; position: relative">
+      <!-- Añadido position: relative -->
       <button
         ref="barrioButton"
         @click="toggleDropdown"
         style="
+          width: 100%;
           background-color: #f3f3f3;
           color: black;
-          padding: 5px 10px;
+          padding: 10px;
           border-radius: 8px;
           border: none;
         "
@@ -31,10 +35,13 @@
         v-show="isDropdownOpen"
         style="
           position: absolute;
-          width: 100%;
+          top: 100%;
+          left: 0;
+          width: 100%; /* Establecer el ancho al 100% para que coincida con el botón */
           background-color: white;
           border-radius: 8px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          z-index: 2;
         "
       >
         <ul style="list-style: none; padding: 5px">
@@ -51,13 +58,14 @@
     </div>
 
     <!-- Botón para abrir el modal de Filtros Adicionales -->
-    <div style="width: 33%; text-align: center">
+    <div style="width: 100%; margin-bottom: 10px">
       <button
         @click="openModal"
         style="
+          width: 100%;
           background-color: #f3f3f3;
           color: black;
-          padding: 5px 10px;
+          padding: 10px;
           border-radius: 8px;
           border: none;
         "
@@ -67,16 +75,10 @@
     </div>
 
     <!-- Botón de Búsqueda -->
-    <div style="width: 33%; text-align: right">
+    <div style="width: 100%; margin-bottom: 10px">
       <button
+        class="w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
         @click="performSearch"
-        style="
-          background-color: #007bff;
-          color: white;
-          padding: 5px 10px;
-          border-radius: 8px;
-          border: none;
-        "
       >
         Buscar
       </button>
@@ -85,14 +87,30 @@
 
   <!-- Modal de Filtros Adicionales -->
   <div
-  v-if="isModalOpen"
-    class="fixed inset-0 bg-black bg-opacity-50 z-40"
+    v-if="isModalOpen"
+    style="
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 50; /* Asegúrate de que sea suficiente para estar por encima de otros elementos */
+    "
     @click="closeModal"
   >
     <div
-      class="fixed left-1/2 transform -translate-x-1/2 top-60% -translate-y-40% bg-white p-6 rounded-lg shadow-lg z-50"
+      style="
+        position: absolute;
+        width: 300px; /* El ancho del modal puede ser el mismo que el de la Searchbar */
+        top: 40%; /* Posiciona el modal en la parte superior de la Searchbar */
+        left: 2%; /* Alinea el modal a la izquierda */
+        background-color: white;
+        padding: 16px; /* Ajusta el padding según sea necesario */
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 51; /* Debe ser superior al z-index del overlay para que se muestre encima */
+      "
       @click.stop
     >
+      
       <!-- Grupo de botones de radio para Número de Habitaciones -->
       <div class="mb-4">
         <span class="text-gray-700 dark:text-gray-400"
@@ -194,11 +212,11 @@ export default {
   },
   mounted() {
     // Registrar el controlador de eventos
-    document.addEventListener('click', this.handleClickOutside);
+    document.addEventListener("click", this.handleClickOutside);
   },
   beforeDestroy() {
     // Limpiar el controlador de eventos
-    document.removeEventListener('click', this.handleClickOutside);
+    document.removeEventListener("click", this.handleClickOutside);
   },
 
   async created() {
@@ -215,7 +233,6 @@ export default {
     },
     openModal() {
       this.isModalOpen = true;
-
     },
     closeModal() {
       this.isModalOpen = false;
@@ -228,10 +245,13 @@ export default {
     handleClickOutside(event) {
       // Obtener elemento barrioButton
       const barrioButton = this.$refs.barrioButton;
-      
 
       // Verificar si el clic fue fuera de los elementos y si están abiertos
-      if (this.isDropdownOpen && barrioButton && !barrioButton.contains(event.target)) {
+      if (
+        this.isDropdownOpen &&
+        barrioButton &&
+        !barrioButton.contains(event.target)
+      ) {
         this.toggleDropdown();
       }
     },
@@ -247,3 +267,7 @@ export default {
 };
 </script>
   
+
+<style>
+
+</style>

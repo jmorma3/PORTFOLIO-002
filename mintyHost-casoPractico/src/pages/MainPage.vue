@@ -1,6 +1,14 @@
 <template>
-  <div class="main-page">
-
+  <div
+    class="main-page"
+    style="
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+    "
+  >
     <!-- Navbar componente -->
     <div>
       <Navbar />
@@ -8,33 +16,56 @@
 
     <!-- Searchbar componente -->
     <div
+    class="searchbar-container"
       style="
-        margin-top: 100px;
-        margin-left: auto;
-        margin-right: auto;
-        position: absolute;
-        left: 50%;
-        top: 10%;
-        transform: translate(-50%, -50%);
+        background-color: grey;
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        justify-content: center; 
+        height: 100vh; 
+        width: fit-content;
+        position: fixed;
+        left: 0; 
+        top: 11%;
+        padding: 5px;
       "
     >
       <Searchbar @onSearch="performSearch" />
     </div>
 
-    <!-- Aquí puedes mostrar los resultados de la búsqueda -->
+    <!-- Lista de Apartamentos -->
     <div
+      class="apartments-container"
       style="
-        margin-top: 100px;
-        margin-left: auto;
-        margin-right: auto;
-        position: absolute;
-        left: 50%;
-        top: 30%;
-        transform: translate(-50%, -50%);
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        top: 14%;
+        right: 5%;
+        height: 85%;
+        width: 70%;
+        padding: 10px;
+        gap: 20px;
+        overflow-y: scroll;
+        z-index: 0;
       "
     >
-    
-    <ApartmentCard v-for="apartment in apartments" :key="apartment.id" :apartment="apartment" />
+      <ApartmentCard
+        v-for="apartment in apartments"
+        :key="apartment.id"
+        :apartmentTitle="apartment.apartment_title"
+        :town="apartment.town"
+        :barrioName="apartment.barrio.name"
+        :address="apartment.address"
+        :monthlyPrice="apartment.monthly_price"
+        :accommodatesMax="apartment.accommodates_max"
+        :bathrooms="apartment.bathrooms"
+        :bedrooms="apartment.bedrooms"
+        :pics="apartment.pic"
+      />
     </div>
   </div>
 </template>
@@ -42,7 +73,7 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import Searchbar from "../components/Searchbar.vue";
-import ApartmentCard from "../components/ApartmentCard.vue"
+import ApartmentCard from "../components/ApartmentCard.vue";
 import { searchApartments } from "../services/apartments.js";
 
 export default {
@@ -50,12 +81,11 @@ export default {
   components: {
     Navbar,
     Searchbar,
-    ApartmentCard
-    
+    ApartmentCard,
   },
   data() {
     return {
-      apartments: [], // Deberías llenar esto con los resultados de la búsqueda
+      apartments: [],
       searchResults: [],
       isLoading: false,
       hasError: false,
@@ -91,5 +121,6 @@ export default {
 </script>
 
 <style>
-/* Aquí van tus estilos */
+
 </style>
+
