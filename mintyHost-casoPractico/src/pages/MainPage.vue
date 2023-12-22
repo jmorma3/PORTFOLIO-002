@@ -16,20 +16,23 @@
 
     <!-- Searchbar componente -->
     <div
-    class="searchbar-container"
-      style="
-        background-color: grey;
-        display: flex;
-        flex-direction: column; 
-        align-items: center;
-        justify-content: center; 
-        height: 100vh; 
-        width: fit-content;
-        position: fixed;
-        left: 0; 
-        top: 11%;
-        padding: 5px;
-      "
+      class="searchbar-container"
+      :style="{
+        backgroundImage: 'url(' + backgroundImage + ')',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        width: 'fit-content',
+        position: 'fixed',
+        left: '0',
+        top: '11%',
+        padding: '5px',
+      }"
     >
       <Searchbar @onSearch="performSearch" />
     </div>
@@ -46,7 +49,7 @@
         top: 14%;
         right: 5%;
         height: 85%;
-        width: 70%;
+        width: 60%;
         padding: 10px;
         gap: 20px;
         overflow-y: scroll;
@@ -74,6 +77,7 @@
 import Navbar from "../components/Navbar.vue";
 import Searchbar from "../components/Searchbar.vue";
 import ApartmentCard from "../components/ApartmentCard.vue";
+import searchbarBackgroundImage from "@/assets/Searchbar-background.jpg";
 import { searchApartments } from "../services/apartments.js";
 
 export default {
@@ -87,40 +91,34 @@ export default {
     return {
       apartments: [],
       searchResults: [],
-      isLoading: false,
-      hasError: false,
+      backgroundImage: searchbarBackgroundImage,
     };
   },
-  computed: {
-    message() {
-      if (this.isLoading) return "Buscando...";
-      if (this.hasError)
-        return "Error al realizar la búsqueda. Por favor, inténtalo de nuevo.";
-      if (this.searchResults.length === 0)
-        return "No se encontraron resultados.";
-      return ""; // No se muestra ningún mensaje si hay resultados
-    },
-  },
   methods: {
+    async loadAllApartments() {
+      try {
+        const results = await searchApartments(); // Llamada sin parámetros para obtener todos los apartamentos
+        this.apartments = results;
+      } catch (error) {
+        console.error("Error al cargar apartamentos: ", error);
+      }
+    },
     async performSearch(searchParams) {
-      this.isLoading = true;
-      this.hasError = false;
       try {
         const results = await searchApartments(searchParams);
         this.searchResults = results;
         this.apartments = results;
       } catch (error) {
         console.error("Error en la búsqueda: ", error);
-        this.hasError = true;
-      } finally {
-        this.isLoading = false;
       }
     },
+  },
+  mounted() {
+    this.loadAllApartments(); // Cargar todos los apartamentos al montar
   },
 };
 </script>
 
 <style>
-
 </style>
 

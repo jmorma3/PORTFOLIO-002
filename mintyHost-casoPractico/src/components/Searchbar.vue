@@ -1,11 +1,11 @@
 <template>
   <div class="searchbar-container"
     style="
-      width: 300px;
+      width: 30vw;
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-color: white;
+      background-color: rgba(255, 255, 255, 0.3);
       padding: 5px;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -14,7 +14,7 @@
   >
     <!-- Botón desplegable de Barrios -->
     <div style="width: 100%; margin-bottom: 10px; position: relative">
-      <!-- Añadido position: relative -->
+      
       <button
         ref="barrioButton"
         @click="toggleDropdown"
@@ -37,7 +37,7 @@
           position: absolute;
           top: 100%;
           left: 0;
-          width: 100%; /* Establecer el ancho al 100% para que coincida con el botón */
+          width: 100%; 
           background-color: white;
           border-radius: 8px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -92,21 +92,21 @@
       position: fixed;
       inset: 0;
       background-color: rgba(0, 0, 0, 0.5);
-      z-index: 50; /* Asegúrate de que sea suficiente para estar por encima de otros elementos */
+      z-index: 50; 
     "
     @click="closeModal"
   >
     <div
       style="
         position: absolute;
-        width: 300px; /* El ancho del modal puede ser el mismo que el de la Searchbar */
-        top: 40%; /* Posiciona el modal en la parte superior de la Searchbar */
-        left: 2%; /* Alinea el modal a la izquierda */
+        width: 300px; 
+        top: 40%; 
+        left: 2%; 
         background-color: white;
-        padding: 16px; /* Ajusta el padding según sea necesario */
+        padding: 16px; 
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 51; /* Debe ser superior al z-index del overlay para que se muestre encima */
+        z-index: 51; 
       "
       @click.stop
     >
@@ -114,7 +114,7 @@
       <!-- Grupo de botones de radio para Número de Habitaciones -->
       <div class="mb-4">
         <span class="text-gray-700 dark:text-gray-400"
-          >Número de Habitaciones:</span
+          >Nº de Habitaciones:</span
         >
         <div class="mt-2">
           <div
@@ -141,7 +141,7 @@
       <!-- Grupo de botones de radio para Número de Huéspedes -->
       <div class="mb-4">
         <span class="text-gray-700 dark:text-gray-400"
-          >Número de Huéspedes:</span
+          >Máx. Huéspedes:</span
         >
         <div class="mt-2">
           <div

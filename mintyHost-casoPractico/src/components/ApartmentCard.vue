@@ -1,9 +1,9 @@
-<template lang="">
+<template>
     <div>
         <div class="max-w-2xl bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div class="p-5">
 
-              <!-- Insertamos aquí el carousel de imágenes: -->
+              <!-- Inserto aquí el carousel de imágenes: -->
               <div id="default-carousel" class="relative w-full" data-carousel="slide">
                    
                     <!-- Carousel de imágenes -->
@@ -35,6 +35,7 @@
                     type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                          @click="prevSlide"
                         aria-label="Previous slide">
+
                         <!-- Icono SVG para "Previous" -->
                         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                             <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -48,6 +49,7 @@
                         class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" 
                         @click="nextSlide"
                         aria-label="Next slide">
+
                         <!-- Icono SVG para "Next" -->
                         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                             <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -73,6 +75,7 @@
                                     <path d="M13.8 12.938h-.01a7 7 0 1 0-11.465.144h-.016l.141.17c.1.128.2.252.3.372L8 20l5.13-6.248c.193-.209.373-.429.54-.66l.13-.154Z"/>
                                 </g>
                                 <!-- ... -->
+
                             </svg>
                             
                             <p class="text-sm font-medium text-gray-700 dark:text-gray-400">
@@ -105,7 +108,7 @@
                             </div>
                             <div class="text-center mt-3"> 
                                 <button class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700">
-                                    Resérvalo ya!
+                                ¡Resérvalo ya!
                                 </button>
                             </div>
                         </div>
@@ -138,7 +141,7 @@ export default {
   },
   methods: {
     nextSlide() {
-      // Incrementa el activeIndex para mostrar la siguiente imagen
+      // Incremento el activeIndex para mostrar la siguiente imagen
       // Reinicia a 0 si es la última imagen
       this.activeIndex = (this.activeIndex + 1) % this.pics.length;
     },
@@ -153,5 +156,6 @@ export default {
 </script>
 
 
-<style lang="">
+<style>
+
 </style>

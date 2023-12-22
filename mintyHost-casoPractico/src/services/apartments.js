@@ -12,11 +12,10 @@ const getBarrios = async()=>{
 
 const searchApartments = async(searchParams)=>{
     try {
-        const {data} = await api.post("/search", searchParams)
-        return data
+        const { data } = await api.post("/search", searchParams);
+        return data;
     } catch (error) {
-        console.log(error)
-        
+        console.error("Error en la búsqueda:", error);
     }
 }
 
