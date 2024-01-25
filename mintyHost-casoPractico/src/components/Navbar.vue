@@ -4,7 +4,7 @@
       
       <div class="flex items-center space-x-3">
         <!-- Logo -->
-        <img :src="logoUrl" alt="Logo" class="h-16 w-auto" />
+        <img :src="logoUrl" alt="Logo" class="h-28 w-auto" />
       </div>
 
       <div class="flex md:order-2 items-center space-x-3">
@@ -54,7 +54,7 @@
 
 <script>
 //Importo mi imagen Logo (me dio problemas el enlace y decidí recortarla de Google)
-import logoUrl from "../assets/MintyHost_logotipo.png";
+import logoUrl from "../assets/My_Host_logo.png";
 
 export default {
   name: "Navbar",
