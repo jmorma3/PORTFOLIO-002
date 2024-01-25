@@ -53,7 +53,7 @@
 
 
 <script>
-//Importo mi imagen Logo (me dio problemas el enlace y decidí recortarla de Google)
+//Importo mi imagen Logo 
 import logoUrl from "../assets/My_Host_logo.png";
 
 export default {
